@@ -16,6 +16,11 @@ export default function Home() {
 
 //use state in parent Board instead of Coordinate in order to calculate Convex hull
 function Board() {
+  const [isHoveringArr, setIsHoveringArr] = useState(Array(15).fill(Array(20).fill(false)));
+  const [isClickedArr, setIsClickedArr] = useState(Array(15).fill(Array(20).fill(false)));
+  const handleHover = (i) => {
+
+  };
   return (
     <div className='w-fit h-fit grid grid-rows-{15} grid-cols-20 border border-gray-300 border-opacity-25'>
         {
@@ -29,9 +34,8 @@ function Board() {
   )
 }
 
-function Coordinate() {
-  const [isHovering, setIsHovering] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
+function Coordinate({isHovering, isClicked, handleHover, handleClick}) {
+  
   return (
     <>
     <div onMouseOver={() => setIsHovering(true)} onMouseOut={() => setIsHovering(false)} 
