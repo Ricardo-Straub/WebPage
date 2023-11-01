@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image'
 import { useState } from 'react'
+import { useEffect } from 'react';
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
 function Board() {
   const [isHoveringArr, setIsHoveringArr] = useState(Array(15).fill().map(() => Array(20).fill(false)));
   const [isClickedArr, setIsClickedArr] = useState(Array(15).fill().map(() => Array(20).fill(false)));
+  const [linesArr, setLinesArr] = useState([]);
   const handleHover = (x, y) => {
     const temp = isHoveringArr.slice();
     temp[y][x] = !temp[y][x];
@@ -28,6 +30,9 @@ function Board() {
     temp[y][x] = !temp[y][x];
     setIsClickedArr(temp);
   };
+  useEffect(() => {
+    setLinesArr(handleLines(isClickedArr));
+  }, [isClickedArr]);
   const arr = Array.from(Array(15), () => Array(20).fill(null));
   
   return (
@@ -44,11 +49,31 @@ function Board() {
             ))
           ))
           }
-          <Line x1={3} y1={3} x2={18} y2={12} />
+          {linesArr}
       </div>
   )
 }
 
+function handleLines(...isClickedArr) {
+  isClickedArr = isClickedArr[0];
+  console.log('-> handel lines')
+  let linesArr = [];
+  let prevX = -1, prevY = -1;
+  for (let x = 0; x < isClickedArr[0].length; x++) {
+    for (let y = 0; y < isClickedArr.length; y++) {
+
+      if (isClickedArr[y][x] === false) continue;
+      if (prevX > 0 && prevY > 0) {
+        linesArr.push(<Line x1={prevX} y1={prevY} x2={x} y2={y} />);
+      }
+      prevX = x;
+      prevY = y;
+    }
+  }
+  console.log('-> handle lines arrLength: '+linesArr.length);
+  return linesArr;
+}
+ 
 function Line({x1, y1, x2, y2}) {
   const distance = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
   const xMid = (x1 + x2) / 2;
@@ -98,7 +123,7 @@ function Coordinate({isHovering, isClicked, handleHover, handleClick}) {
 function Circle({isClicked}) {
   let color = isClicked ? 'rgb(47	129	247)' : "rgb(209 213 219)";
   return (
-    <div className=' w-4 h-4 absolute inset-2 rounded-full'
+    <div className=' w-4 h-4 absolute inset-2 rounded-full z-10'
     style={{backgroundColor: color}}></div>
   )
 }
