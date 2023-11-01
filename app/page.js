@@ -31,13 +31,11 @@ function Board() {
   const arr = Array.from(Array(15), () => Array(20).fill(null));
   
   return (
-    <div className='w-fit h-fit grid grid-rows-{15} grid-cols-20 border border-gray-300 border-opacity-25'>
+    <div className='relative w-fit h-fit grid grid-rows-{15} grid-cols-20 border border-gray-300 border-opacity-25'>
         {
           arr.map((row, y) => (
             row.map((col, x) => (
               <Coordinate 
-                x={x}
-                y={y} 
                 isHovering={isHoveringArr[y][x]}  
                 isClicked={isClickedArr[y][x]}     
                 handleHover={() => handleHover(x, y)}
@@ -45,12 +43,40 @@ function Board() {
               />
             ))
           ))
-            }
+          }
+          <Line x1={3} y1={3} x2={18} y2={12} />
       </div>
   )
 }
 
-function Coordinate({x, y, isHovering, isClicked, handleHover, handleClick}) {
+function Line({x1, y1, x2, y2}) {
+  const distance = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
+  const xMid = (x1 + x2) / 2;
+  const yMid = (y1 + y2) / 2;
+  const salopeInRadian = Math.atan2(y1 - y2, x1 - x2);
+  const salopeInDegrees = (salopeInRadian * 180) / Math.PI;
+  const transformValue = `rotate(${salopeInDegrees}deg)`;
+  //width equals distance time w-1 (.25rem)
+  // .25 * 8 = eine einehit
+  // + .25 * 4 um geraden start im mittelpunkt vom punkt zu haben
+  return (
+    <>
+       
+      <div style={{
+        width: (distance * 0.25 * 8)  + 'rem',
+        top: ((yMid * .25 * 8) + .25 * 3.5) + 'rem',
+        left: (((xMid - (distance / 2)) * .25 * 8) + .25 * 3.5) + 'rem',
+        transform: transformValue
+      }} 
+        className={
+          `absolute 
+          h-1
+          bg-red-400`}></div>
+    </>
+  )
+}
+
+function Coordinate({isHovering, isClicked, handleHover, handleClick}) {
   
   return (
     <>
