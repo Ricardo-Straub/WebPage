@@ -71,7 +71,7 @@ function Line({x1, y1, x2, y2}) {
         className={
           `absolute 
           h-1
-          bg-red-400`}></div>
+          bg-slate-300`}></div>
     </>
   )
 }
@@ -82,12 +82,12 @@ function Coordinate({isHovering, isClicked, handleHover, handleClick}) {
     <>
     <div onMouseOver={handleHover} onMouseOut={handleHover} 
     onClick={handleClick} 
-    className=' w-8 h-8 relative opacity-25'>
+    className=' w-8 h-8 relative'>
       <div className='w-full h-full flex flex-col justify-center '>
-        <div className='bg-gray-300 w-8 h-0.5'></div>
+        <div className='bg-gray-300 w-8 h-0.5 opacity-25'></div>
       </div>
       <div className='w-full h-full flex flex-row justify-center absolute inset-0'>
-        <div className='bg-gray-300  w-0.5 h-8 '></div>
+        <div className='bg-gray-300  w-0.5 h-8 opacity-25'></div>
       </div>
       {isHovering && <Circle isClicked={isClicked}/> || isClicked && <Circle isClicked={isClicked}/>}
     </div>
@@ -96,7 +96,7 @@ function Coordinate({isHovering, isClicked, handleHover, handleClick}) {
 }
 
 function Circle({isClicked}) {
-  let color = isClicked ? 'rgb(21 111 235)' : "rgb(209 213 219)";
+  let color = isClicked ? 'rgb(47	129	247)' : "rgb(209 213 219)";
   return (
     <div className=' w-4 h-4 absolute inset-2 rounded-full'
     style={{backgroundColor: color}}></div>
