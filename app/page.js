@@ -32,6 +32,14 @@ function Board() {
   };
   useEffect(() => {
     setLinesArr(handleLines(isClickedArr));
+    /* for (let x = 0; x < coord[0].length; x++) {
+      for (let y = 0; y < coord.length; y++) {
+        if (coord[y][x] === true) {
+          points.push([x, y]);
+          nrPoints++;
+        }
+      }
+    } */
   }, [isClickedArr]);
   const arr = Array.from(Array(15), () => Array(20).fill(null));
   
@@ -54,8 +62,27 @@ function Board() {
   )
 }
 
-function handleLines(...isClickedArr) {
-  isClickedArr = isClickedArr[0];
+function divideConquer(points) { //if want recursive parameter has to be points arr not coord 
+  //divide points by x until only 5 points left
+  if (points.length > 5) { // bis > 5? aber wird immer halbiert also dann evt. am ende kleiner 5
+    points = points[0];
+    let upper = [];
+    let lower = [];
+    lower = points.filter((point, index) => index <= points.length / 2); //violate const?
+    upper = points.filter((point, index) => index > points.length / 2);
+    //merge und recursive call?
+  }
+  
+  
+  //merge convex hull
+  
+  //brute force convex hull with 5 points
+
+
+}
+
+function handleLines(isClickedArr) {
+  //isClickedArr = isClickedArr[0];
   console.log('-> handel lines')
   let linesArr = [];
   let prevX = -1, prevY = -1;
