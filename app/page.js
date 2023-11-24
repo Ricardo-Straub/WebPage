@@ -62,27 +62,48 @@ function Board() {
   )
 }
 
+//points array must be array of points with coordinates
+//only want points left at end that create convex hull and create lines
 function divideConquer(points) { //if want recursive parameter has to be points arr not coord 
   //divide points by x until only 5 points left
-  if (points.length > 5) { // bis > 5? aber wird immer halbiert also dann evt. am ende kleiner 5
-    points = points[0];
-    let upper = [];
-    let lower = [];
-    lower = points.filter((point, index) => index <= points.length / 2); //violate const?
-    upper = points.filter((point, index) => index > points.length / 2);
-    //merge und recursive call?
-  }
   
   
+  if (points.length <= 5) return points; // "brute force" convex hull with 5 points
+  
+  // bis > 5? aber wird immer halbiert also dann evt. am ende kleiner 5
+  const lower = points.filter((point, index) => index <= points.length / 2); 
+  const upper = points.filter((point, index) => index > points.length / 2);
   //merge convex hull
-  
-  //brute force convex hull with 5 points
+  let pointA;
+  let pointB;
+  while (true) {
 
-
+  }
+  return // return list of points creating convex hull of lower and upper
+}
+/**
+ * 
+ * @param {*} pointA 
+ * @param {*} pointB 
+ * @param {*} hullPoints 
+ * return boolean
+ * 
+ * checks if the line betweeen point A and B is a Tangent of the given convex hull
+ */
+function isTangent(pointA, pointB, hullPoints) {
+  //calc line between a and b
+  let detMatrix;
+  //Big O(n): checking every point. Faster implementation possible?
+  for (point in hullPoints) {
+    /* detMatrix = {{}
+                 {}
+                 {}} */
+    if (Math.det(detMatrix) <= 0) return false;
+  }
+  return true;
 }
 
 function handleLines(isClickedArr) {
-  //isClickedArr = isClickedArr[0];
   console.log('-> handel lines')
   let linesArr = [];
   let prevX = -1, prevY = -1;
